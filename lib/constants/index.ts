@@ -6,3 +6,9 @@ export const SIGNIN_DEFAULT_VALUE ={
     email:'',
     password:'',
 }
+export const SIGNUP_DEFAULT_VALUE = {
+  name: "",
+  email: "",
+  password: "",
+  confpassword: "",
+};

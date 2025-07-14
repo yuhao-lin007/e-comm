@@ -4,13 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SIGNIN_DEFAULT_VALUE } from "@/lib/constants";
 import Link from "next/link";
-import { signInwithCredentials } from "@/lib/actions/user.action";
+import { signInWithCredentials } from "@/lib/actions/user.action";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
 
 const CredentialsSignInForm = () => {
-  const [data, action] = useActionState(signInwithCredentials, {
+  const [data, action] = useActionState(signInWithCredentials, {
     success: false,
     message: "",
   });
