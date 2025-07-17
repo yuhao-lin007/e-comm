@@ -11,6 +11,7 @@ import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
 import { hashSync } from "bcrypt-ts-edge";
 import { ShippingAddress } from "@/types";
+import { getMyCart } from "./cart.action";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -36,6 +37,8 @@ export async function signInWithCredentials(
 
 // Sign user out
 export async function signOutUser() {
+  const currentCart = await getMyCart();
+  await prisma.cart.delete({ where: { id: currentCart?.id } });
   await signOut();
 }
 
