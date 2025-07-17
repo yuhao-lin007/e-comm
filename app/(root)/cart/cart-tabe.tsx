@@ -20,54 +20,6 @@ import {
 } from "@/components/ui/table";
 import { formatCurrency } from "@/lib/utils";
 
-function AddButton({ item }: { item: CartItem }) {
-  const [isPending, startTransition] = useTransition();
-  return (
-    <Button
-      disabled={isPending}
-      variant="outline"
-      onClick={() =>
-        startTransition(async () => {
-          const res = await addItemToCart(item);
-          if (!res.success) {
-            toast.success("", { description: res.message });
-          }
-        })
-      }
-    >
-      {isPending ? (
-        <Loader className="w-4 h-4 animate-spin" />
-      ) : (
-        <Plus className="w-4 h-4" />
-      )}
-    </Button>
-  );
-}
-
-function RemoveButton({ item }: { item: CartItem }) {
-  const [isPending, startTransition] = useTransition();
-  return (
-    <Button
-      disabled={isPending}
-      variant="outline"
-      onClick={() =>
-        startTransition(async () => {
-          const res = await removeItemFromCart(item.productId);
-          if (!res.success) {
-            toast.success("", { description: res.message });
-          }
-        })
-      }
-    >
-      {isPending ? (
-        <Loader className="w-4 h-4 animate-spin" />
-      ) : (
-        <Minus className="w-4 h-4" />
-      )}
-    </Button>
-  );
-}
-
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
