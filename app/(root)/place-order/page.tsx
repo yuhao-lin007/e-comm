@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { getMyCart } from "@/lib/actions/cart.action";
 import { getUserById } from "@/lib/actions/user.action";
-import { ShippingAddress } from "@/types";
+import { CartItem, ShippingAddress } from "@/types";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import CheckoutSteps from "@/components/share/checkout-steps";
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { formatCurrency } from "@/lib/utils";
-
+import PlaceOrderForm from "./place-order-form";
 export const metadata: Metadata = {
   title: "Place Order",
 };
@@ -84,7 +84,7 @@ const PlaceOrderPage = async () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {cart.items.map((item) => (
+                  {cart.items.map((item: CartItem) => (
                     <TableRow key={item.slug}>
                       <TableCell>
                         <Link
@@ -132,6 +132,7 @@ const PlaceOrderPage = async () => {
                 <div>Total</div>
                 <div>{formatCurrency(cart.totalPrice)}</div>
               </div>
+              <PlaceOrderForm/>
             </CardContent>
           </Card>
         </div>
