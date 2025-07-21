@@ -15,12 +15,13 @@ const UserButton = async () => {
   const session = await auth();
 
   if (!session) {
-    return(
-    <Button asChild>
-      <Link href="/sign-in">
-        <UserIcon /> Sign In
-      </Link>
-    </Button>);
+    return (
+      <Button asChild>
+        <Link href="/sign-in">
+          <UserIcon /> Sign In
+        </Link>
+      </Button>
+    );
   }
   const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "?";
   //const imgSrc = `https://avatar.vercel.sh/${session.user?.name}.svg?text=${firstInitial}`;
@@ -48,6 +49,16 @@ const UserButton = async () => {
               </p>
             </div>
           </DropdownMenuLabel>
+          <DropdownMenuItem>
+            <Link href="/user/profile" className="w-full">
+              User Profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/user/orders" className="w-full">
+              Order History
+            </Link>
+          </DropdownMenuItem>
 
           <DropdownMenuItem className="p-0 mb-1">
             <form action={signOutUser} className="w-full">
