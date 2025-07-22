@@ -14,13 +14,14 @@ const links = [
     title: "Products",
     href: "/admin/products",
   },
-  {
-    title: "Profile",
-    href: "/admin/profile",
-  },
+
   {
     title: "Orders",
     href: "/admin/orders",
+  },
+  {
+    title: "User",
+    href: "/admin/user",
   },
 ];
 const MainNav = ({
