@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 const AdminDashboardPage = async () => {
 
-    await requireAdmin();
+  await requireAdmin();
   const session = await auth();
   if (session?.user.role !== "admin")
     throw new Error("admin permission required");
