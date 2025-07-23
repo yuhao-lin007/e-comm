@@ -23,15 +23,20 @@ import {
 import {
   approvePayPalOrder,
   createPayPalOrder,
+  updateOrderToPaidByCOD,
+  deliverOrder,
 } from "@/lib/actions/order.action";
 import { toast } from "sonner";
-
+import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
 const OrderDetailsTable = ({
   order,
   paypalClientId,
+  isAdmin,
 }: {
   order: Order;
   paypalClientId: string;
+  isAdmin: boolean;
 }) => {
   const {
     shippingAddress,
@@ -79,6 +84,59 @@ const OrderDetailsTable = ({
         description: res.message,
       });
     }
+  };
+
+  const MarkAsPaidButton = () => {
+    const [isPending, startTransition] = useTransition();
+
+    return (
+      <Button
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await updateOrderToPaidByCOD(order.id);
+            if (res.success) {
+              toast.success("Success", {
+                description: res.message,
+              });
+            } else {
+              toast.error("Error", {
+                description: res.message,
+              });
+            }
+          })
+        }
+      >
+        {isPending ? "processing..." : "Mark As Paid"}
+      </Button>
+    );
+  };
+
+  const MarkAsDeliveredButton = () => {
+    const [isPending, startTransition] = useTransition();
+    return (
+      <Button
+        type="button"
+        disabled={isPending}
+        onClick={() =>
+          startTransition(async () => {
+            const res = await deliverOrder(order.id);
+            if (res.success) {
+              toast.success("Success", {
+                description: res.message,
+              });
+            } else {
+              toast.error("Error", {
+                description: res.message,
+              });
+            }
+          })
+        }
+      >
+        {isPending ? "processing..." : "Mark As Delivered"}
+      </Button>
+    );
   };
   return (
     <>
@@ -194,6 +252,10 @@ const OrderDetailsTable = ({
                   />
                 </PayPalScriptProvider>
               </div>
+              {isAdmin && !isPaid && paymentMethod === "CashOnDelivery" && (
+                <MarkAsPaidButton />
+              )}
+              {isAdmin && isPaid && !isDelivered && <MarkAsDeliveredButton />}
             </CardContent>
           </Card>
         </div>
