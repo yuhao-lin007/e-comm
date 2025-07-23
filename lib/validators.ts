@@ -13,13 +13,16 @@ export const insertProductSchema = z.object({
   category: z.string().trim().min(3, "Category must be at 3 charater"),
   brand: z.string().trim().min(3, "Brand must be at 3 charater"),
   description: z.string().trim().min(3, "Description must be at 3 charater"),
-  stock: z.coerce.number(),
+  stock: z.number(),
   images: z.array(z.string()).min(1, "product must have atleast image"),
   isFeatured: z.boolean(),
   banner: z.string().nullable(),
   price: currency,
 });
 
+export const updateProductSchema = insertProductSchema.extend({
+  id: z.string().min(1, "ID is required"),
+});
 export const signInFormSchema = z.object({
   email: z.string().trim().email("Invaid email address"),
   password: z.string().trim().min(6, "Password must be atleast 6 charaters"),
