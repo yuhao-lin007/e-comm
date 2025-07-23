@@ -111,7 +111,7 @@ const form = useForm<
                 "name"
               >;
             }) => (
-              <FormItem className="w-full">
+              <FormItem className=" w-full">
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter product name" {...field} />
@@ -133,13 +133,13 @@ const form = useForm<
               >;
             }) => (
               <FormItem className="w-full">
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Slug</FormLabel>
                 <FormControl>
-                  <div className="relative">
+                  <div className="flex gap-2">
                     <Input placeholder="Enter slug" {...field} />
                     <Button
                       type="button"
-                      className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 mt-2"
+                      className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-1"
                       onClick={() => {
                         form.setValue(
                           "slug",
@@ -295,7 +295,7 @@ const form = useForm<
                 control={form.control}
                 name="isFeatured"
                 render={({ field }) => (
-                  <FormItem className="space-x-2 items-center">
+                  <FormItem className="flex space-x-2 items-center">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -323,7 +323,7 @@ const form = useForm<
                     form.setValue("banner", res[0].url);
                   }}
                   onUploadError={(error: Error) => {
-                    toast.error("",{
+                    toast.error("", {
                       description: `ERROR! ${error.message}`,
                     });
                   }}
