@@ -5,7 +5,7 @@ import { insertProductSchema, updateProductSchema } from "@/lib/validators";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
+import { ControllerRenderProps, Resolver, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   Form,
@@ -39,10 +39,12 @@ const AdminProductForm = ({
 
 const schema = type === "Update" ? updateProductSchema : insertProductSchema;
 
-const form = useForm<
-  z.infer<typeof schema> | z.infer<typeof updateProductSchema>
->({
-  resolver: zodResolver(schema),
+type ProductFormInput =
+  | z.infer<typeof insertProductSchema>
+  | z.infer<typeof updateProductSchema>;
+
+const form = useForm<ProductFormInput>({
+  resolver: zodResolver(schema) as Resolver<ProductFormInput>,
   defaultValues: product ?? productDefaultValues,
 });
 

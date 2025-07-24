@@ -21,9 +21,14 @@ export async function getProductBySlug(slug: string) {
 return await prisma.product.findFirst({
   where:{slug: slug}
 })
-
 }
+export async function getProductById(productId: string) {
+  const data = await prisma.product.findFirst({
+    where: { id: productId },
+  });
 
+  return convert(data);
+}
 
 export async function getAllProducts({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
