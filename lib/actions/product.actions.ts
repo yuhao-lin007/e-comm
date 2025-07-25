@@ -60,15 +60,21 @@ export async function getAllProducts({
       : {};
 
   const categoryFilter = category && category !== "all" ? { category: category } : {};
-  const priceFilter: Prisma.ProductWhereInput =
-    price && price !== "all"
+const priceFilter: Prisma.ProductWhereInput =
+  price && price !== "all"
+    ? price.includes("-")
       ? {
           price: {
             gte: Number(price.split("-")[0]),
             lte: Number(price.split("-")[1]),
           },
         }
-      : {};
+      : {
+          price: {
+            gte: Number(price),
+          },
+        }
+    : {};
 
   const ratingFilter =
     rating && rating !== "all" ? { rating: { gte: Number(rating) } } : {};
