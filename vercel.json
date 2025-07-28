@@ -1,0 +1,19 @@
+{
+  "headers": [
+    {
+      "source": "/google6e864aa9c3657b30.html",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/html"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/google6e864aa9c3657b30.html",
+      "destination": "/api/google-verification"
+    }
+  ]
+}

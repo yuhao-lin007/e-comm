@@ -6,6 +6,9 @@ import ProductPrice from "@/components/share/product/product_price";
 import ProductImage from "@/components/share/product/product_image";
 import AddToCart from "@/components/share/product/add-to-cart";
 import { getMyCart } from "@/lib/actions/cart.action";
+import { auth } from "@/auth";
+import ReviewList from "./review-list";
+import Rating from "@/components/share/product/rating";
 const ProdcutDetailPage = async (props:{
     params: Promise<{slug:string}>
 }) => {
@@ -15,6 +18,9 @@ const ProdcutDetailPage = async (props:{
     if(!product) notFound ();
 
     const cart= await getMyCart();
+
+    const session = await auth();
+    const userId = session?.user?.id;
     return (
       <>
         <section>
@@ -30,9 +36,8 @@ const ProdcutDetailPage = async (props:{
                   {product.brand} {product.category}
                 </p>
                 <h1 className="h3-bold">{product.name}</h1>
-                <p>
-                  {product.rating} of {product.numReviews} Reviews
-                </p>
+                <Rating value={Number(product.rating)} />
+                <p>{product.numReviews} reviews</p>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                   <ProductPrice
                     value={Number(product.price)}
@@ -66,7 +71,7 @@ const ProdcutDetailPage = async (props:{
                   {product.stock > 0 && (
                     <div className="flex-center">
                       <AddToCart
-                        cart ={cart}
+                        cart={cart}
                         item={{
                           productId: product.id,
                           name: product.name,
@@ -82,6 +87,14 @@ const ProdcutDetailPage = async (props:{
               </Card>
             </div>
           </div>
+        </section>
+        <section className="mt-10">
+          <h2 className="h2-bold  mb-5">Customer Reviews</h2>
+          <ReviewList
+            productId={product.id}
+            productSlug={product.slug}
+            userId={userId || ""}
+          />
         </section>
       </>
     );
